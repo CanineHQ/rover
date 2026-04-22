@@ -15,7 +15,7 @@ ARG TARGETARCH
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     TERM=xterm-256color \
-    WORKSPACE_DIR=/workspace
+    DISABLE_AUTOUPDATER=1
 
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
@@ -61,7 +61,6 @@ COPY entrypoint.sh /usr/local/bin/rover-entrypoint
 RUN chmod +x /usr/local/bin/rover-entrypoint && \
     git lfs install --system
 
-WORKDIR /workspace
 
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/rover-entrypoint"]
 CMD ["sleep", "infinity"]
