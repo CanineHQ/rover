@@ -11,33 +11,26 @@ It is designed to:
 
 ## Pre-installed Coding Agents
 
-| Agent | Command | Required Env Var |
-|-------|---------|-----------------|
-| Claude Code | `claude` | `ANTHROPIC_API_KEY` |
-| Codex | `codex` | `OPENAI_API_KEY` |
+| Agent | Command |
+|-------|---------|
+| Claude Code | `claude` |
+| Codex | `codex` |
 
 ## Key Defaults
 
-- workspace: `/workspace`
 - entrypoint: `rover-entrypoint`
 - default command: `sleep infinity`
 
 ## Build
 
 ```bash
-docker build -f resources/sidecars/rover/Dockerfile.sidecar -t canine/rover-sidecar:dev resources/sidecars/rover
+docker build -f Dockerfile.sidecar -t canine/rover-sidecar:dev .
 ```
 
 ## Usage
 
-API keys should be injected as environment variables when running the container:
-
 ```bash
-docker run -d \
-  -e ANTHROPIC_API_KEY=sk-ant-... \
-  -e OPENAI_API_KEY=sk-... \
-  -v workspace:/workspace \
-  canine/rover-sidecar:dev
+docker run -d canine/rover-sidecar:dev
 ```
 
 Then exec into the running container to invoke agents:
