@@ -22,6 +22,10 @@ if [ -n "${ROVER_GIT_REPOSITORY_URL:-}" ] && [ ! -d "${workspace_dir}/.git" ]; t
   echo "Clone complete."
 fi
 
+# Persist bash history in rover's home (on the volume, outside the repo)
+export HISTFILE="/home/rover/.bash_history"
+touch "${HISTFILE}"
+
 cd "${workspace_dir}"
 
 exec "$@"

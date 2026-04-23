@@ -41,7 +41,7 @@ RUN apt-get update -qq && \
       sudo \
       tini \
       unzip \
-      vim-tiny \
+      vim \
       wget \
       xz-utils && \
     ln -sf /usr/bin/fdfind /usr/local/bin/fd && \
@@ -57,10 +57,15 @@ RUN arch="$(case "${TARGETARCH:-amd64}" in amd64) echo x64 ;; arm64) echo arm64 
 RUN npm install -g @anthropic-ai/claude-code @openai/codex && \
     npm cache clean --force
 
+# Create rover user with UID 0 group membership and full sudo access
+RUN useradd -m -s /bin/bash -G root rover && \
+    echo "rover ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/rover && \
+    chmod 0440 /etc/sudoers.d/rover
+
 COPY entrypoint.sh /usr/local/bin/rover-entrypoint
 RUN chmod +x /usr/local/bin/rover-entrypoint && \
     git lfs install --system
 
-
+USER rover
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/rover-entrypoint"]
 CMD ["sleep", "infinity"]
