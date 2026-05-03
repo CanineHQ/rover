@@ -42,9 +42,9 @@ mkdir -p /home/rover/.claude
 cat > /home/rover/.claude/settings.json <<EOF
 {
   "permissions": {
-    "defaultMode": "bypassPermissions",
-    "skipDangerousModePermissionPrompt": true
-  }
+    "defaultMode": "bypassPermissions"
+  },
+  "skipDangerousModePermissionPrompt": true
 }
 EOF
 
