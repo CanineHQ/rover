@@ -41,8 +41,10 @@ echo "cd ${workspace_dir}" > /home/rover/.bashrc
 mkdir -p /home/rover/.claude
 cat > /home/rover/.claude/settings.json <<EOF
 {
-  "defaultMode": "bypassPermissions",
-  "skipDangerousModePermissionPrompt": true
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "skipDangerousModePermissionPrompt": true
+  }
 }
 EOF
 
