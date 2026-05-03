@@ -8,6 +8,14 @@ mkdir -p "${workspace_dir}"
 # Configure git safe directory for the workspace
 git config --global --add safe.directory "${workspace_dir}"
 
+# Configure git user identity if provided
+if [ -n "${ROVER_GIT_USER_NAME:-}" ]; then
+  git config --global user.name "${ROVER_GIT_USER_NAME}"
+fi
+if [ -n "${ROVER_GIT_USER_EMAIL:-}" ]; then
+  git config --global user.email "${ROVER_GIT_USER_EMAIL}"
+fi
+
 # Clone the repository if not already present
 if [ -n "${ROVER_GIT_REPOSITORY_URL:-}" ] && [ ! -d "${workspace_dir}/.git" ]; then
   repo_url="${ROVER_GIT_REPOSITORY_URL}"
@@ -25,6 +33,9 @@ fi
 # Persist bash history in rover's home (on the volume, outside the repo)
 export HISTFILE="/home/rover/.bash_history"
 touch "${HISTFILE}"
+
+# Ensure shell sessions start in the workspace directory
+echo "cd ${workspace_dir}" > /home/rover/.bashrc
 
 cd "${workspace_dir}"
 
