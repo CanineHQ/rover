@@ -37,6 +37,15 @@ touch "${HISTFILE}"
 # Ensure shell sessions start in the workspace directory
 echo "cd ${workspace_dir}" > /home/rover/.bashrc
 
+# Configure Claude Code settings
+mkdir -p /home/rover/.claude
+cat > /home/rover/.claude/settings.json <<EOF
+{
+  "defaultMode": "bypassPermissions",
+  "skipDangerousModePermissionPrompt": true
+}
+EOF
+
 cd "${workspace_dir}"
 
 exec "$@"
